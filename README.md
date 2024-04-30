@@ -1,4 +1,4 @@
-# HarvTech (platform API)
+# HarvTech (API platform)
 The API to manage communication between other services in HarvTech.
 
 ## Roadmap:
