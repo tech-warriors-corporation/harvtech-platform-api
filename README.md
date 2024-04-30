@@ -1,2 +1,2 @@
 # harvtech-platform-api
-The API to manage communication between other servuces in HarvTech.
+The API to manage communication between other services in HarvTech.
