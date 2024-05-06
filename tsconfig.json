@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "lib": [
+            "ESNext"
+        ],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "removeComments": true,
+        "strict": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "noFallthroughCasesInSwitch": true,
+        "isolatedModules": true,
+        "resolveJsonModule": true,
+        "noUnusedLocals": true,
+        "forceConsistentCasingInFileNames": true,
+        "preserveValueImports": false,
+        "noUnusedParameters": true,
+        "useDefineForClassFields": true,
+        "skipLibCheck": true,
+        "incremental": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowJs": false,
+        "esModuleInterop": true,
+        "types": [
+            "node"
+        ],
+        "typeRoots": ["./node_modules/@types"],
+        "baseUrl": ".",
+        "paths": {
+            "~/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": ["src/**/*.ts", "**/*.d.ts"],
+    "exclude": [
+        "./node_modules"
+    ]
+}
