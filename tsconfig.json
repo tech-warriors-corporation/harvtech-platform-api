@@ -6,6 +6,8 @@
             "ESNext"
         ],
         "outDir": "./dist",
+        "rootDir": "./src",
+        "removeComments": true,
         "strict": true,
         "moduleResolution": "Node",
         "allowSyntheticDefaultImports": true,
@@ -19,6 +21,7 @@
         "useDefineForClassFields": true,
         "skipLibCheck": true,
         "incremental": true,
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowJs": false,
         "esModuleInterop": true,
