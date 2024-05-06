@@ -103,6 +103,7 @@ You should be very specific in file names.
 - [ ] Review project.
 - [X] Add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) and test it.
 - [ ] Add [PostgreSQL](https://www.postgresql.org).
+- [ ] Use [Crypto](https://www.w3schools.com/nodejs/ref_crypto.asp) from NodeJS with algorithm AES-256-CTR.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
