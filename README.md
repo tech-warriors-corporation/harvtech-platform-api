@@ -105,6 +105,7 @@ You should be very specific in file names.
 - [ ] Add [PostgreSQL](https://www.postgresql.org).
 - [ ] Use [Crypto](https://www.w3schools.com/nodejs/ref_crypto.asp) from NodeJS with algorithm AES-256-CTR.
 - [ ] Add [JWT](https://jwt.io) to authenticate requests.
+- [ ] Use an ORM for PostgreSQL.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
