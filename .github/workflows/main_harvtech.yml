@@ -59,4 +59,4 @@ jobs:
           app-name: 'harvtech'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E00E58829F8A490F8AD09A738F33CAA7 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
