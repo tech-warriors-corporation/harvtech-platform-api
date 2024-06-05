@@ -16,7 +16,7 @@ jobs:
             -   name: Install Dependencies
                 run: |
                     npm install
-                    npm run prod
+                    npm run build
             -   name: Deploy to Azure App Service
                 uses: azure/webapps-deploy@v2
                 with:
