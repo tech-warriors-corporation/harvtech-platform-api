@@ -10,8 +10,8 @@
     "scripts": {
         "prepare": "husky install",
         "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./src/index.ts",
-        "build": "babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
-        "prod": "rm -rf ./dist && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored && node ./dist/index.js",
+        "prod:build": "yarn && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
+        "prod:run": "node ./dist/index.js",
         "lint": "npx eslint src",
         "lint:fix": "yarn lint --fix",
         "prettier": "npx prettier src --check",
