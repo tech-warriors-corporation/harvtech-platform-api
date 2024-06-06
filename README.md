@@ -47,7 +47,7 @@ yarn dev
 
 ### Production
 ```
-yarn prod
+yarn prod:build && yarn prod:run
 ```
 
 ## Setup JetBrains (IDE)
@@ -107,6 +107,7 @@ You should be very specific in file names.
 - [ ] Add [JWT](https://jwt.io) to authenticate requests.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
+- [ ] Add test in CI/CD.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
