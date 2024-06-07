@@ -101,6 +101,7 @@ You should be very specific in file names.
 - [ ] Config project.
 - [ ] Add coverage code.
 - [ ] Review project.
+- [X] Storage in Danilo's Azure.
 - [X] Add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) and test it.
 - [ ] Add [PostgreSQL](https://www.postgresql.org).
 - [ ] Use [Crypto](https://www.w3schools.com/nodejs/ref_crypto.asp) from NodeJS with algorithm AES-256-CTR.

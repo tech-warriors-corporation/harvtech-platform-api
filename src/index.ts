@@ -25,10 +25,12 @@ router.post('/upload-file', async (context: Context) => {
     const body = context.request.body as Body
     const url = await uploadBase64File(ModelPrefix.RICE_LEAF, body.file)
 
-    context.body = await axios.post(`${process.env.AI_URL}/predict`, {
+    const { data } = await axios.post(`${process.env.AI_URL}/predict`, {
         content_url: url,
         model_type: ModelType.RICE_LEAF,
     })
+
+    context.body = data
 })
 
 app.use(
