@@ -21,11 +21,6 @@ type Body = {
     }
 }
 
-// TODO: remove in future this test
-router.get('/', (context: Context) => {
-    context.body = 'HarvTech'
-})
-
 router.post('/upload-file', async (context: Context) => {
     const body = context.request.body as Body
     const url = await uploadBase64File(ModelPrefix.RICE_LEAF, body.file)
