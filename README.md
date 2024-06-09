@@ -109,6 +109,7 @@ You should be very specific in file names.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
 - [ ] Add test in CI/CD.
+- [ ] Add header for validate request to AI.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
