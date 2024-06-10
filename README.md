@@ -47,7 +47,30 @@ yarn dev
 
 ### Production
 ```
-yarn prod:build && yarn prod:run
+yarn prod:build && yarn prod:start
+```
+
+### Tests
+Our tests are made with [Jest](https://jestjs.io). Run the commands below.
+
+#### Default
+``` 
+yarn test 
+```
+
+#### Watch
+``` 
+yarn test:watch
+```
+
+#### Quiet
+``` 
+yarn test:quiet
+```
+
+#### Coverage
+``` 
+yarn test:coverage
 ```
 
 ## Setup JetBrains (IDE)
@@ -109,7 +132,8 @@ You should be very specific in file names.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
 - [ ] Add test in CI/CD.
-- [ ] Add header for validate request to AI.
+- [ ] Add header with secret key for validate request to AI.
+- [ ] Make the code more agnostic of framework, library and other tools.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
