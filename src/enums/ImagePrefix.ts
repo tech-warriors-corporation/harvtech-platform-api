@@ -1,3 +1,3 @@
-export enum ModelPrefix {
+export enum ImagePrefix {
     RICE_LEAF = 'rice-leaf',
 }

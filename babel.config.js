@@ -15,7 +15,14 @@ module.exports = {
             'module-resolver',
             {
                 alias: {
-                    '~': './src',
+                    '@config': './src/config',
+                    '@controllers': './src/controllers',
+                    '@enums': './src/enums',
+                    '@helpers': './src/helpers',
+                    '@routes': './src/routes',
+                    '@services': './src/services',
+                    '@types': './src/types',
+                    '@utils': './src/utils',
                 },
             },
         ],
