@@ -1,5 +1,5 @@
 import { ContainerClient, StorageSharedKeyCredential } from '@azure/storage-blob'
-import { env } from '@config/env'
+import { env } from '~config/env'
 
 export class AzureService {
     private readonly credential: StorageSharedKeyCredential

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { env } from '@config/env'
-import { ModelType } from '@enums/ModelType'
+import { env } from '~config/env'
+import { ModelType } from '~enums/ModelType'
 
 export class AiService {
     private readonly url = env.aiUrl

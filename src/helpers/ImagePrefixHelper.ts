@@ -1,5 +1,5 @@
-import { ImagePrefix } from '@enums/ImagePrefix'
-import { ModelType } from '@enums/ModelType'
+import { ImagePrefix } from '~enums/ImagePrefix'
+import { ModelType } from '~enums/ModelType'
 
 export class ImagePrefixHelper {
     static getImagePrefixFromModelType(modelType: ModelType) {

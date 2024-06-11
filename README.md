@@ -47,7 +47,30 @@ yarn dev
 
 ### Production
 ```
-yarn prod:build && yarn prod:run
+yarn prod:build && yarn prod:start
+```
+
+### Tests
+Our tests are made with [Jest](https://jestjs.io). Run the commands below.
+
+#### Default
+``` 
+yarn test 
+```
+
+#### Watch
+``` 
+yarn test:watch
+```
+
+#### Quiet
+``` 
+yarn test:quiet
+```
+
+#### Coverage
+``` 
+yarn test:coverage
 ```
 
 ## Setup JetBrains (IDE)
@@ -94,13 +117,12 @@ You should be very specific in file names.
 
 ## Roadmap
 - [X] Add [Axios](https://axios-http.com).
-- [ ] Add [Jest](https://jestjs.io).
+- [X] Add [Jest](https://jestjs.io).
 - [X] Study about [Azure SDK for JS](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/storage/storage-blob/samples/v12/typescript).
 - [X] Review code in `review` directory.
-- [ ] Deploy application in Azure and set badge status in `README.md`.
-- [ ] Config project.
-- [ ] Add coverage code.
-- [ ] Review project.
+- [X] Config project.
+- [X] Add coverage code.
+- [X] Review project.
 - [X] Storage in Danilo's Azure.
 - [X] Add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) and test it.
 - [ ] Add [PostgreSQL](https://www.postgresql.org).
@@ -108,8 +130,11 @@ You should be very specific in file names.
 - [ ] Add [JWT](https://jwt.io) to authenticate requests.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
-- [ ] Add test in CI/CD.
-- [ ] Add header for validate request to AI.
+- [X] Add test in CI/CD.
+- [ ] Add header with secret key for validate request to AI.
+- [ ] Make the code more agnostic of framework, library and other tools.
+- [ ] Validate our requests with access token.
+- [ ] Add health check.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
