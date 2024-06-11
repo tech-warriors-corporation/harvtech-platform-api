@@ -10,5 +10,5 @@ export const env = {
         accountKey: process.env.AZURE_ACCOUNT_KEY as string,
         storageContainerUrl: process.env.AZURE_STORAGE_CONTAINER_URL as string,
     },
-    port: process.env.PORT as number,
+    port: +process.env.PORT! as number,
 }

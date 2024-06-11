@@ -1,13 +1,13 @@
 import { Context } from 'koa'
 import { v4 as uuid } from 'uuid'
 
-import { ModelType } from '@enums/ModelType'
-import { ErrorHelper } from '@helpers/ErrorHelper'
-import { ImagePrefixHelper } from '@helpers/ImagePrefixHelper'
-import { AiService } from '@services/AiService'
-import { AzureService } from '@services/AzureService'
-import { Base64File } from '@types/files'
-import { imageMimeTypes } from '@utils/mime-types'
+import { ModelType } from '~enums/ModelType'
+import { ErrorHelper } from '~helpers/ErrorHelper'
+import { ImagePrefixHelper } from '~helpers/ImagePrefixHelper'
+import { AiService } from '~services/AiService'
+import { AzureService } from '~services/AzureService'
+import { Base64File } from '~types/files'
+import { imageMimeTypes } from '~utils/mime-types'
 
 type PredictImageBody = {
     modelType: ModelType
@@ -22,40 +22,41 @@ export class PredictController {
 
     async image(ctx: Context) {
         try {
-            const { modelType, file }: PredictImageBody = ctx.request.body
+            const { modelType, file } = ctx.request.body as PredictImageBody
 
-            if (!modelType) throw new Error('Model type not found')
-            if (!file) throw new Error('File not found')
+            if (!modelType) throw new Error('Tipo do modelo é obrigatório')
+            if (!file) throw new Error('Arquivo é obrigatório')
 
             const prefix = ImagePrefixHelper.getImagePrefixFromModelType(modelType)
 
-            if (!prefix) throw new Error('Prefix not found')
+            if (!prefix) throw new Error('Prefixo do modelo não encontrado')
 
             const { content, type } = file
 
-            if (!content) throw new Error('Should contain a content')
-            if (!type) throw new Error('Should contain a file type')
+            if (!content) throw new Error('A imagem deve conter um conteúdo')
+            if (!type) throw new Error('A imagem deve conter um tipo')
 
-            const contentType = imageMimeTypes[type]
+            const contentType = imageMimeTypes[type as keyof typeof imageMimeTypes]
 
-            if (!contentType) throw new Error(`Unsupported file type: "${type}"`)
+            if (!contentType)
+                throw new Error(`Apenas JPG, JPEG e PNG são permitidos, o tipo da imagem é inválido: "${type}"`)
 
             const buffer = Buffer.from(content.replace(/^data:image\/\w+;base64,/, ''), 'base64')
             const fileName = `${prefix}-${uuid()}.${type}`
             const imageUrl = await this.azureService.uploadImage(fileName, buffer, contentType)
 
-            if (!imageUrl) throw new Error('Could not upload the image')
+            if (!imageUrl) throw new Error('Não foi possível salvar a imagem')
 
             const text = await this.aiService.getPredictImage(imageUrl, modelType)
 
-            if (!text) throw new Error('Could not get the text from the AI')
+            if (!text) throw new Error('Não foi possível obter a análise da imagem')
 
             ctx.body = { text }
         } catch (error) {
-            console.error(error)
-
             ctx.status = 400
-            ctx.body = ErrorHelper.createErrorModel('Ocorreu um problema ao obter a previsão da imagem')
+            ctx.body = ErrorHelper.createErrorModel(
+                (error as Error).message || 'Ocorreu um problema ao obter a análise da imagem',
+            )
         }
     }
 }

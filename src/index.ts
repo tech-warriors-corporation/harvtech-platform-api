@@ -1,9 +1,9 @@
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 
-import { env } from '@config/env'
 import cors from '@koa/cors'
-import { router } from '@routes/index'
+import { env } from '~config/env'
+import { router } from '~routes/index'
 
 const app = new Koa()
 

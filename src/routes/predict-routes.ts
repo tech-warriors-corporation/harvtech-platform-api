@@ -1,7 +1,7 @@
-import { PredictController } from '@controllers/PredictController'
 import Router from '@koa/router'
-import { AiService } from '@services/AiService'
-import { AzureService } from '@services/AzureService'
+import { PredictController } from '~controllers/PredictController'
+import { AiService } from '~services/AiService'
+import { AzureService } from '~services/AzureService'
 
 export default (router: Router) => {
     const predictController = new PredictController(new AzureService(), new AiService())
