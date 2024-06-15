@@ -22,17 +22,19 @@ describe('AiService', () => {
         mock.reset()
     })
 
-    it('Should return the generated text when getPredictImage is called', async () => {
-        mock.onPost(`${env.aiUrl}/predict`).reply(200, { generated_text: generatedText })
+    describe('getPredictImage', () => {
+        it('Should return the generated text when getPredictImage is called', async () => {
+            mock.onPost(`${env.aiUrl}/predict`).reply(200, { generated_text: generatedText })
 
-        const result = await aiService.getPredictImage(imageUrl, modelType)
+            const result = await aiService.getPredictImage(imageUrl, modelType)
 
-        expect(result).toBe(generatedText)
-    })
+            expect(result).toBe(generatedText)
+        })
 
-    it('Should throw an error when the API /predict call fails', async () => {
-        mock.onPost(`${env.aiUrl}/predict`).reply(500)
+        it('Should throw an error when the API /predict call fails', async () => {
+            mock.onPost(`${env.aiUrl}/predict`).reply(500)
 
-        await expect(aiService.getPredictImage(imageUrl, modelType)).rejects.toThrow()
+            await expect(aiService.getPredictImage(imageUrl, modelType)).rejects.toThrow()
+        })
     })
 })
