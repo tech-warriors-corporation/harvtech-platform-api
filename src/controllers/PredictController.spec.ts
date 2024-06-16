@@ -68,7 +68,7 @@ describe('PredictController', () => {
         expect(ctx.status).toBe(200)
     })
 
-    it('Should return status 400 and model type required error message if model type is missing', async () => {
+    it('Should return status 400 and model type required error message if modelType is missing', async () => {
         ctx.request.body.modelType = null
 
         await controller.image(ctx)
