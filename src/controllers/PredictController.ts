@@ -1,6 +1,7 @@
 import { Context } from 'koa'
 
 import { ModelType } from '~enums/ModelType'
+import { PredictImageError } from '~enums/PredictImageError'
 import { ErrorHelper } from '~helpers/ErrorHelper'
 import { ImagePrefixHelper } from '~helpers/ImagePrefixHelper'
 import { AiService } from '~services/AiService'
@@ -23,39 +24,36 @@ export class PredictController {
         try {
             const { modelType, file } = ctx.request.body as PredictImageBody
 
-            if (!modelType) throw new Error('Tipo do modelo é obrigatório')
-            if (!file) throw new Error('Arquivo é obrigatório')
+            if (!modelType) throw new Error(PredictImageError.MODEL_TYPE_REQUIRED)
+            if (!file) throw new Error(PredictImageError.FILE_REQUIRED)
 
             const prefix = ImagePrefixHelper.getImagePrefixFromModelType(modelType)
 
-            if (!prefix) throw new Error('Prefixo do modelo não encontrado')
+            if (!prefix) throw new Error(PredictImageError.PREFIX_NOT_FOUND)
 
             const { content, type } = file
 
-            if (!content) throw new Error('A imagem deve conter um conteúdo')
-            if (!type) throw new Error('A imagem deve conter um tipo')
+            if (!content) throw new Error(PredictImageError.FILE_CONTENT_REQUIRED)
+            if (!type) throw new Error(PredictImageError.FILE_TYPE_REQUIRED)
 
             const contentType = imageMimeTypes[type as keyof typeof imageMimeTypes]
 
-            if (!contentType)
-                throw new Error(`Apenas JPG, JPEG e PNG são permitidos, o tipo da imagem é inválido: "${type}"`)
+            if (!contentType) throw new Error(PredictImageError.INVALID_FILE_TYPE.replace('type', type))
 
             const buffer = Buffer.from(content.replace(/^data:image\/\w+;base64,/, ''), 'base64')
             const fileName = `${prefix}-${crypto.randomUUID()}.${type}`
             const imageUrl = await this.azureService.uploadImage(fileName, buffer, contentType)
 
-            if (!imageUrl) throw new Error('Não foi possível salvar a imagem')
+            if (!imageUrl) throw new Error(PredictImageError.IMAGE_UPLOAD_FAILED)
 
             const text = await this.aiService.getPredictImage(imageUrl, modelType)
 
-            if (!text) throw new Error('Não foi possível obter a análise da imagem')
+            if (!text) throw new Error(PredictImageError.IMAGE_ANALYSIS_FAILED)
 
             ctx.body = { text }
         } catch (error) {
             ctx.status = 400
-            ctx.body = ErrorHelper.createErrorModel(
-                (error as Error).message || 'Ocorreu um problema ao obter a análise da imagem',
-            )
+            ctx.body = ErrorHelper.createErrorModel((error as Error).message || PredictImageError.GENERAL_ERROR)
         }
     }
 }
