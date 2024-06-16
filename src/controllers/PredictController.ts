@@ -1,5 +1,4 @@
 import { Context } from 'koa'
-import { v4 as uuid } from 'uuid'
 
 import { ModelType } from '~enums/ModelType'
 import { ErrorHelper } from '~helpers/ErrorHelper'
@@ -42,7 +41,7 @@ export class PredictController {
                 throw new Error(`Apenas JPG, JPEG e PNG são permitidos, o tipo da imagem é inválido: "${type}"`)
 
             const buffer = Buffer.from(content.replace(/^data:image\/\w+;base64,/, ''), 'base64')
-            const fileName = `${prefix}-${uuid()}.${type}`
+            const fileName = `${prefix}-${crypto.randomUUID()}.${type}`
             const imageUrl = await this.azureService.uploadImage(fileName, buffer, contentType)
 
             if (!imageUrl) throw new Error('Não foi possível salvar a imagem')
