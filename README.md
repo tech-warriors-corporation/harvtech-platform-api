@@ -51,7 +51,7 @@ yarn prod:build && yarn prod:start
 ```
 
 ### Tests
-Our tests are made with [Jest](https://jestjs.io). Run the commands below.
+Our tests are made with [Jest](https://jestjs.io). Use `*.test.ts` for integration tests and `*.spec.ts` for unit tests. Run the commands below.
 
 #### Default
 ``` 
