@@ -11,6 +11,7 @@ const config: Config.InitialOptions = {
         '<rootDir>/src/**/*.ts',
         '!<rootDir>/src/index.ts',
         '!<rootDir>/src/config/**',
+        '!<rootDir>/src/entities/**',
         '!<rootDir>/src/enums/**',
         '!<rootDir>/src/routes/index.ts',
         '!<rootDir>/src/types/**',
@@ -21,6 +22,7 @@ const config: Config.InitialOptions = {
     moduleNameMapper: {
         '^~config/(.*)$': '<rootDir>/src/config/$1',
         '^~controllers/(.*)$': '<rootDir>/src/controllers/$1',
+        '^~entities/(.*)$': '<rootDir>/src/entities/$1',
         '^~enums/(.*)$': '<rootDir>/src/enums/$1',
         '^~helpers/(.*)$': '<rootDir>/src/helpers/$1',
         '^~routes/(.*)$': '<rootDir>/src/routes/$1',
