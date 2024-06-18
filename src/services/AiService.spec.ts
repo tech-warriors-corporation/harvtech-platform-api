@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import { AiService } from './AiService'
@@ -24,7 +24,7 @@ describe('AiService', () => {
 
     describe('getPredictImage', () => {
         it('Should return the generated text when getPredictImage is called', async () => {
-            mock.onPost(`${env.aiUrl}/predict`).reply(200, { generated_text: generatedText })
+            mock.onPost(`${env.aiUrl}/predict`).reply(HttpStatusCode.Ok, { generated_text: generatedText })
 
             const result = await aiService.getPredictImage(imageUrl, modelType)
 

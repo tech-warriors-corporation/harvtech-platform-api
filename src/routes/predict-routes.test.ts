@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios'
 import request from 'supertest'
 
 import { HandleRequest, makeHandleRequest } from '~config/tests'
@@ -23,14 +24,14 @@ describe('Predict routes', () => {
     })
 
     describe('POST: /predict/image', () => {
-        it('Should return code 400 and have error', async () => {
+        it(`Should return code ${HttpStatusCode.BadRequest} and have error`, async () => {
             const { body, statusCode } = await request(handleRequest).post('/predict/image')
 
             expect(body).toHaveProperty('error')
-            expect(statusCode).toBe(400)
+            expect(statusCode).toBe(HttpStatusCode.BadRequest)
         })
 
-        it('Should return code 200 and text on response', async () => {
+        it(`Should return code ${HttpStatusCode.Ok} and text on response`, async () => {
             const { body, statusCode } = await request(handleRequest)
                 .post('/predict/image')
                 .send({
@@ -42,7 +43,7 @@ describe('Predict routes', () => {
                 })
 
             expect(body).toEqual({ text: 'Predict text' })
-            expect(statusCode).toBe(200)
+            expect(statusCode).toBe(HttpStatusCode.Ok)
         })
     })
 })
