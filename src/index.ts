@@ -2,6 +2,7 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 
 import cors from '@koa/cors'
+import { connect } from '~config/database'
 import { env } from '~config/env'
 import { router } from '~routes/index'
 
@@ -19,4 +20,4 @@ app.use(router.allowedMethods())
 
 const PORT = env.port
 
-app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))
+connect().then(() => app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`)))
