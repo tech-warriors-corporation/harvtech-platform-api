@@ -27,6 +27,12 @@ AI_URL=<set AI URL 🔑>
 AZURE_ACCOUNT_NAME=<set Azure account name 🔑>
 AZURE_ACCOUNT_KEY=<set Azure account key 🔑>
 AZURE_STORAGE_CONTAINER_URL=<set storage container URL 🔑>
+DB_HOST=<set database host 🔑>
+DB_DOCKER_PORT=<set Docker database port 🔑>
+DB_PORT=<set database port 🔑>
+DB_NAME=<set database name 🔑>
+DB_USERNAME=<set database username 🔑>
+DB_PASSWORD=<set database password 🔑>
 PORT=<set port 🔑>
 ```
 
@@ -38,6 +44,11 @@ yarn
 ### Active Husky hooks (if not automatically configured)
 ```
 yarn prepare
+```
+
+### Database in Docker
+```
+yarn db
 ```
 
 ### Development
@@ -131,6 +142,11 @@ You should be very specific in file names.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
 - [X] Add test in CI/CD.
+- [ ] Add environment variables in Cloud.
+- [ ] Protect routes with token.
+- [ ] UUID to avoid sequential ids.
+- [ ] Render or Neon for PostgreSQL.
+- [ ] Remove TODO comments.
 - [ ] Add header with secret key for validate request to AI.
 - [ ] Make the code more agnostic of framework, library and other tools.
 - [ ] Validate our requests with access token.

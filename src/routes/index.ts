@@ -1,3 +1,4 @@
+import useAccountRoutes from './account-routes'
 import useHealthCheckRoutes from './health-check-routes'
 import usePredictImageRoutes from './predict-routes'
 
@@ -7,5 +8,6 @@ const router = new Router()
 
 usePredictImageRoutes(router)
 useHealthCheckRoutes(router)
+useAccountRoutes(router)
 
 export { router }
