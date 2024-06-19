@@ -18,5 +18,10 @@ export const env = {
         username: process.env.DB_USERNAME as string,
         password: process.env.DB_PASSWORD as string,
     },
+    crypto: {
+        algorithm: process.env.CRYPTO_ALGORITHM as string,
+        key: process.env.CRYPTO_KEY as string,
+        iv: process.env.CRYPTO_IV as string,
+    },
     port: +process.env.PORT! as number,
 }

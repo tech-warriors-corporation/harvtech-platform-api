@@ -12,6 +12,9 @@ declare global {
             DB_NAME: string
             DB_USERNAME: string
             DB_PASSWORD: string
+            CRYPTO_ALGORITHM: string
+            CRYPTO_KEY: string
+            CRYPTO_IV: string
             PORT: string
         }
     }
