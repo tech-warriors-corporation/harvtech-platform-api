@@ -1,6 +1,8 @@
 import { join } from 'path'
 import { DataSource } from 'typeorm'
 
+import 'reflect-metadata'
+
 import { env } from '~config/env'
 
 const directory = join(__dirname, '..')
