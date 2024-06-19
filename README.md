@@ -33,6 +33,9 @@ DB_PORT=<set database port 🔑>
 DB_NAME=<set database name 🔑>
 DB_USERNAME=<set database username 🔑>
 DB_PASSWORD=<set database password 🔑>
+CRYPTO_ALGORITHM=<set crypto algorithm 🔑>
+CRYPTO_KEY=<set crypto key 🔑>
+CRYPTO_IV=<set crypto IV 🔑>
 PORT=<set port 🔑>
 ```
 
@@ -147,6 +150,8 @@ You should be very specific in file names.
 - [ ] UUID to avoid sequential ids.
 - [ ] Render or Neon for PostgreSQL.
 - [ ] Remove TODO comments.
+- [ ] Coverage badge in this `README.md`.
+- [ ] Study about [TypeORM](https://typeorm.io).
 - [ ] Add header with secret key for validate request to AI.
 - [ ] Make the code more agnostic of framework, library and other tools.
 - [ ] Validate our requests with access token.
