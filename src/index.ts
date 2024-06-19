@@ -1,6 +1,8 @@
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 
+import 'reflect-metadata'
+
 import cors from '@koa/cors'
 import { connect } from '~config/database'
 import { env } from '~config/env'
