@@ -1,19 +1,26 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+
+import { AccountType } from '~enums/AccountType'
+import { DEFAULT_MAX_LENGTH } from '~utils/validations'
 
 @Entity()
 export class AccountEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string = ''
 
-    @Column()
+    @Column({ type: 'varchar', length: DEFAULT_MAX_LENGTH })
     name: string = ''
 
-    @Column({ unique: true })
+    @Column({ type: 'varchar', length: DEFAULT_MAX_LENGTH, unique: true })
     email: string = ''
 
-    @Column()
+    @Column({ type: 'varchar', length: DEFAULT_MAX_LENGTH })
     password: string = ''
 
-    @Column({ type: 'int' }) // TODO: create enum for type
-    type: number = 0
+    @Column({ type: 'enum', enum: AccountType })
+    type: AccountType = AccountType.ADMIN
+
+    @ManyToOne(() => AccountEntity, { nullable: true }) // TODO: maybe use other relationship
+    @JoinColumn({ name: 'parentId' })
+    parent?: AccountEntity
 }
