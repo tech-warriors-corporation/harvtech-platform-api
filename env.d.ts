@@ -6,6 +6,12 @@ declare global {
             AZURE_ACCOUNT_NAME: string
             AZURE_ACCOUNT_KEY: string
             AZURE_STORAGE_CONTAINER_URL: string
+            DB_HOST: string
+            DB_DOCKER_PORT: string
+            DB_PORT: string
+            DB_NAME: string
+            DB_USERNAME: string
+            DB_PASSWORD: string
             PORT: string
         }
     }

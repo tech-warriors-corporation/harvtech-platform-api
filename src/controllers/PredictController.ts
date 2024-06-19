@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios'
 import { Context } from 'koa'
 
 import { ModelType } from '~enums/ModelType'
@@ -52,7 +53,7 @@ export class PredictController {
 
             ctx.body = { text }
         } catch (error) {
-            ctx.status = 400
+            ctx.status = HttpStatusCode.BadRequest
             ctx.body = ErrorHelper.createErrorModel((error as Error).message || PredictImageError.GENERAL_ERROR)
         }
     }

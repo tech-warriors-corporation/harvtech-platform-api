@@ -17,8 +17,10 @@ module.exports = {
                 alias: {
                     '~config': './src/config',
                     '~controllers': './src/controllers',
+                    '~entities': './src/entities',
                     '~enums': './src/enums',
                     '~helpers': './src/helpers',
+                    '~migrations': './src/migrations',
                     '~routes': './src/routes',
                     '~services': './src/services',
                     '~types': './src/types',
