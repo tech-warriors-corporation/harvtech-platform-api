@@ -5,6 +5,10 @@ dotenv.config()
 export const env = {
     webUrl: process.env.WEB_URL as string,
     aiUrl: process.env.AI_URL as string,
+    jwt: {
+        secret: process.env.JWT_SECRET as string,
+        expires: process.env.JWT_EXPIRES as string,
+    },
     azure: {
         accountName: process.env.AZURE_ACCOUNT_NAME as string,
         accountKey: process.env.AZURE_ACCOUNT_KEY as string,
