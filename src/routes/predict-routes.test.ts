@@ -1,20 +1,8 @@
 import { HttpStatusCode } from 'axios'
 import request from 'supertest'
 
-import { HandleRequest, makeHandleRequest } from '~config/tests'
+import { HandleRequest, makeHandleRequest, makeJpegBase64 } from '~config/tests'
 import { ModelType } from '~enums/ModelType'
-
-jest.mock('~services/AzureService', () => ({
-    AzureService: jest.fn().mockImplementation(() => ({
-        uploadImage: jest.fn().mockReturnValue('https://image.png'),
-    })),
-}))
-
-jest.mock('~services/AiService', () => ({
-    AiService: jest.fn().mockImplementation(() => ({
-        getPredictImage: jest.fn().mockReturnValue('Predict text'),
-    })),
-}))
 
 describe('Predict routes', () => {
     let handleRequest: HandleRequest
@@ -37,13 +25,13 @@ describe('Predict routes', () => {
                 .send({
                     modelType: ModelType.RICE_LEAF,
                     file: {
-                        content: 'data:image/jpeg;base64',
+                        content: makeJpegBase64(),
                         type: 'jpg',
                     },
                 })
 
-            expect(body).toEqual({ text: 'Predict text' })
+            expect(body.text).toBeTruthy()
             expect(statusCode).toBe(HttpStatusCode.Ok)
-        })
+        }, 20000)
     })
 })
