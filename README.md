@@ -146,6 +146,7 @@ You should be very specific in file names.
 - [ ] Add [JWT](https://jwt.io) to authenticate requests.
 - [ ] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
+- [X] Protect passwords with a pattern with numbers, chars and symbols, use minlength too.
 - [X] Add test in CI/CD.
 - [ ] Add environment variables in Cloud.
 - [ ] Protect routes with token.
@@ -158,7 +159,7 @@ You should be very specific in file names.
 - [ ] Make the code more agnostic of framework, library and other tools.
 - [ ] Validate our requests with access token.
 - [ ] Protect routes with account types.
-- [ ] Create `SanitizeHelper` for entries.
+- [X] Create `SanitizeHelper` for entries.
 - [ ] Maybe use Bcrypt.
 - [ ] Add health check.
 
