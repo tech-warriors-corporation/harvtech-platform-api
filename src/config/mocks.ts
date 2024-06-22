@@ -1,5 +1,6 @@
 import { dataSource } from '~config/database'
 import { AccountEntity } from '~entities/AccountEntity'
+import { AccountPlan } from '~enums/AccountPlan'
 import { AccountType } from '~enums/AccountType'
 
 type AddAccountParams = {
@@ -7,16 +8,11 @@ type AddAccountParams = {
     email: string
     password: string
     type: AccountType
+    plan?: AccountPlan
 }
 
-export const mockAddAccount = async ({ name, email, password, type }: AddAccountParams) => {
-    const account = new AccountEntity()
+export const mockAddAccount = async (params: AddAccountParams) => {
+    const repository = await dataSource.getRepository(AccountEntity)
 
-    account.id = crypto.randomUUID()
-    account.name = name
-    account.email = email
-    account.password = password
-    account.type = type
-
-    await dataSource.manager.save(AccountEntity, account)
+    await repository.save(params)
 }
