@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
+import { AccountPlan } from '~enums/AccountPlan'
 import { AccountType } from '~enums/AccountType'
 import { DEFAULT_MAX_LENGTH } from '~utils/validations'
 
@@ -19,6 +20,9 @@ export class AccountEntity {
 
     @Column({ type: 'enum', enum: AccountType })
     type: AccountType = AccountType.ADMIN
+
+    @Column({ type: 'enum', enum: AccountPlan, nullable: true })
+    plan?: AccountPlan
 
     @ManyToOne(() => AccountEntity, { nullable: true }) // TODO: maybe use other relationship
     @JoinColumn({ name: 'parentId' })
