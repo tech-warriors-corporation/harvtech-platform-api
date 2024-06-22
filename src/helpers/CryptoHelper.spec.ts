@@ -23,4 +23,13 @@ describe('CryptoHelper', () => {
             expect(cryptoHelper.decrypt(hash)).toBe(text)
         })
     })
+
+    describe('Compare', () => {
+        it('Should compare a text with a hash and return if is equal', () => {
+            const text = 'HarvTech'
+            const hash = cryptoHelper.encrypt(text)
+
+            expect(cryptoHelper.compare(text, hash)).toBe(true)
+        })
+    })
 })
