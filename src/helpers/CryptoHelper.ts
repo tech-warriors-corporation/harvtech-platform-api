@@ -23,4 +23,8 @@ export class CryptoHelper {
 
         return decryptedText
     }
+
+    compare(text: string, hash: string): boolean {
+        return text === this.decrypt(hash)
+    }
 }
