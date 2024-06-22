@@ -24,6 +24,8 @@ Create **.env** file in **root** folder with content.
 ```
 WEB_URL=<set Web URL 🔑>
 AI_URL=<set AI URL 🔑>
+JWT_SECRET=<set JWT secret 🔑>
+JWT_EXPIRES=<set JWT expires 🔑>
 AZURE_ACCOUNT_NAME=<set Azure account name 🔑>
 AZURE_ACCOUNT_KEY=<set Azure account key 🔑>
 AZURE_STORAGE_CONTAINER_URL=<set storage container URL 🔑>
@@ -155,6 +157,9 @@ You should be very specific in file names.
 - [ ] Add header with secret key for validate request to AI.
 - [ ] Make the code more agnostic of framework, library and other tools.
 - [ ] Validate our requests with access token.
+- [ ] Protect routes with account types.
+- [ ] Create `SanitizeHelper` for entries.
+- [ ] Maybe use Bcrypt.
 - [ ] Add health check.
 
 ## Thanks for read
