@@ -4,11 +4,12 @@ import request from 'supertest'
 import { connect, disconnect, synchronize } from '~config/database'
 import { mockAddAccount } from '~config/mocks'
 import { HandleRequest, makeHandleRequest } from '~config/tests'
+import { AccountPlan } from '~enums/AccountPlan'
 import { AccountType } from '~enums/AccountType'
 import { CryptoHelper } from '~helpers/CryptoHelper'
 
 describe('Account routes', () => {
-    const model = { email: 'contact@harvtech.com', password: '1234' }
+    const model = { email: 'contato@harvtech.com', password: 'HarvTech1234!' }
     let cryptoHelper: CryptoHelper
     let handleRequest: HandleRequest
 
@@ -34,6 +35,7 @@ describe('Account routes', () => {
                 email: model.email,
                 password: cryptoHelper.encrypt(model.password),
                 type: AccountType.ADMIN,
+                plan: AccountPlan.DELUXE,
             })
 
             const { body, statusCode } = await request(handleRequest).post('/accounts/login').send(model)
