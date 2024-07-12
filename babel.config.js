@@ -17,9 +17,11 @@ module.exports = {
                 alias: {
                     '~config': './src/config',
                     '~controllers': './src/controllers',
+                    '~decorators': './src/decorators',
                     '~entities': './src/entities',
                     '~enums': './src/enums',
                     '~helpers': './src/helpers',
+                    '~middlewares': './src/middlewares',
                     '~routes': './src/routes',
                     '~services': './src/services',
                     '~types': './src/types',

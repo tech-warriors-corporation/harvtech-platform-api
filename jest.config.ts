@@ -22,9 +22,11 @@ const config: Config.InitialOptions = {
     moduleNameMapper: {
         '^~config/(.*)$': '<rootDir>/src/config/$1',
         '^~controllers/(.*)$': '<rootDir>/src/controllers/$1',
+        '^~decorators/(.*)$': '<rootDir>/src/decorators/$1',
         '^~entities/(.*)$': '<rootDir>/src/entities/$1',
         '^~enums/(.*)$': '<rootDir>/src/enums/$1',
         '^~helpers/(.*)$': '<rootDir>/src/helpers/$1',
+        '^~middlewares/(.*)$': '<rootDir>/src/middlewares/$1',
         '^~routes/(.*)$': '<rootDir>/src/routes/$1',
         '^~services/(.*)$': '<rootDir>/src/services/$1',
         '^~types/(.*)$': '<rootDir>/src/types/$1',
