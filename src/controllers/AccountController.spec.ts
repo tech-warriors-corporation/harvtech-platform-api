@@ -43,7 +43,7 @@ jest.mock('~helpers/CryptoHelper', () => ({
 
 jest.mock('jsonwebtoken', () => ({
     verify: jest.fn(),
-    sign: jest.fn().mockReturnValue(accessToken),
+    sign: jest.fn().mockReturnValue('accessToken'),
     decode: jest.fn(),
 }))
 
