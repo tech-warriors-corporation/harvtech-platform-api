@@ -5,7 +5,7 @@ import { ModelType } from '~enums/ModelType'
 
 describe('ImagePrefixHelper', () => {
     describe('getImagePrefixFromModelType', () => {
-        it('Should return the correct prefix for ModelType.RICE_LEAF', () => {
+        it(`Should return the correct prefix for ${ModelType.RICE_LEAF}`, () => {
             expect(ImagePrefixHelper.getImagePrefixFromModelType(ModelType.RICE_LEAF)).toBe(ImagePrefix.RICE_LEAF)
         })
 

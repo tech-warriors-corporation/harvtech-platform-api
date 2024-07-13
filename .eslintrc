@@ -65,6 +65,7 @@
                 "*.ts"
             ],
             "rules": {
+                "@typescript-eslint/no-var-requires": "off",
                 "import/newline-after-import": "error",
                 "simple-import-sort/imports": [
                     "error",
