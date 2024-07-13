@@ -4,14 +4,20 @@ import { Context } from 'koa'
 
 import { dataSource } from '~config/database'
 import { env } from '~config/env'
+import { UseMiddleware } from '~decorators/UseMiddleware'
 import { AccountEntity } from '~entities/AccountEntity'
 import { AccountLoginError } from '~enums/AccountLoginError'
 import { AccountPlan } from '~enums/AccountPlan'
+import { AccountRefreshTokenError } from '~enums/AccountRefreshTokenError'
 import { AccountRegisterError } from '~enums/AccountRegisterError'
 import { AccountType } from '~enums/AccountType'
+import { Header } from '~enums/Header'
 import { CryptoHelper } from '~helpers/CryptoHelper'
 import { ErrorHelper } from '~helpers/ErrorHelper'
 import { SanitizeHelper } from '~helpers/SanitizeHelper'
+import { shouldBeLogged } from '~middlewares/should-be-logged'
+import { shouldBeUnlogged } from '~middlewares/should-be-unlogged'
+import { AccountAccessTokenPayload } from '~types/account'
 import { isValidPassword } from '~utils/validations'
 
 type AccountLoginBody = {
@@ -28,16 +34,6 @@ type AccountRegisterBody = {
     acceptedTerms: boolean
 }
 
-type AccountAccessTokenData = {
-    account: {
-        id: string
-        name: string
-        email: string
-        type: AccountType
-        plan?: AccountPlan
-    }
-}
-
 export class AccountController {
     private readonly JWT_SECRET = env.jwt.secret
     private readonly JWT_EXPIRES = env.jwt.expires
@@ -45,6 +41,7 @@ export class AccountController {
 
     constructor(private readonly cryptoHelper: CryptoHelper) {}
 
+    @UseMiddleware(shouldBeUnlogged)
     async login(ctx: Context) {
         try {
             const { password, ...body } = ctx.request.body as AccountLoginBody
@@ -71,6 +68,7 @@ export class AccountController {
         }
     }
 
+    @UseMiddleware(shouldBeUnlogged)
     async register(ctx: Context) {
         try {
             const { password, passwordConfirmation, plan, acceptedTerms, ...body } = ctx.request
@@ -113,8 +111,36 @@ export class AccountController {
         }
     }
 
+    @UseMiddleware(shouldBeLogged)
+    async refreshToken(ctx: Context) {
+        try {
+            const accessToken = ctx.headers[Header.X_ACCESS_TOKEN] as string
+
+            if (!accessToken) throw new Error()
+
+            let {
+                account: { id, email },
+            } = jwt.verify(accessToken.split(' ')[1], this.JWT_SECRET) as AccountAccessTokenPayload
+
+            id = SanitizeHelper.input(id)
+            email = SanitizeHelper.input(email)
+
+            if (!id || !email) throw new Error()
+
+            const repository = await dataSource.getRepository(AccountEntity)
+            const account = await repository.findOne({ where: { id, email } })
+
+            if (!account) throw new Error()
+
+            ctx.body = this.mountAccessTokenBody(account)
+        } catch {
+            ctx.status = HttpStatusCode.Unauthorized
+            ctx.body = ErrorHelper.createErrorModel(AccountRefreshTokenError.EXPIRED_SESSION)
+        }
+    }
+
     private mountAccessTokenBody(account: AccountEntity): { accessToken: string } {
-        const data: AccountAccessTokenData = {
+        const payload: AccountAccessTokenPayload = {
             account: {
                 id: account.id,
                 name: account.name,
@@ -124,6 +150,6 @@ export class AccountController {
             },
         }
 
-        return { accessToken: jwt.sign(data, this.JWT_SECRET, { expiresIn: this.JWT_EXPIRES }) }
+        return { accessToken: jwt.sign(payload, this.JWT_SECRET, { expiresIn: this.JWT_EXPIRES }) }
     }
 }
