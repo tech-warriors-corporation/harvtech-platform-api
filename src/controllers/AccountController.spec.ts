@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 import { AccountController } from './AccountController'
 
-import { connect, dataSource, disconnect, synchronize } from '~config/database'
+import { dataSource } from '~config/database'
 import { mockAddAccount } from '~config/mocks'
 import { AccountEntity } from '~entities/AccountEntity'
 import { AccountLoginError } from '~enums/AccountLoginError'
@@ -54,9 +54,6 @@ jest.mock('~config/database', () => ({
             save: jest.fn(),
         }),
     },
-    connect: jest.fn(),
-    disconnect: jest.fn(),
-    synchronize: jest.fn(),
 }))
 
 describe('AccountController', () => {
@@ -64,17 +61,7 @@ describe('AccountController', () => {
     let controller: AccountController
     let ctx: any
 
-    beforeAll(async () => {
-        await connect()
-    })
-
-    afterAll(async () => {
-        await disconnect()
-    })
-
     beforeEach(async () => {
-        await synchronize()
-
         cryptoHelper = new CryptoHelper()
         controller = new AccountController(cryptoHelper)
     })

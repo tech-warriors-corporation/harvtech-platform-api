@@ -26,7 +26,3 @@ export const connect = async () => {
 export const disconnect = async () => {
     await dataSource.destroy()
 }
-
-export const synchronize = async () => {
-    await dataSource.synchronize(true)
-}

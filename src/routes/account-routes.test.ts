@@ -1,14 +1,14 @@
 import { HttpStatusCode } from 'axios'
 import request from 'supertest'
 
-import { connect, disconnect, synchronize } from '~config/database'
+import { connect, disconnect } from '~config/database'
 import { mockAccessToken, mockLogin } from '~config/mocks'
 import { HandleRequest, makeHandleRequest } from '~config/tests'
 import { AccountPlan } from '~enums/AccountPlan'
 import { Header } from '~enums/Header'
 
 describe('Account routes', () => {
-    const model = { email: 'contato@harvtech.com', password: 'HarvTech1234!' }
+    let model = { email: '', password: '' }
     let handleRequest: HandleRequest
 
     beforeAll(async () => {
@@ -20,7 +20,7 @@ describe('Account routes', () => {
     })
 
     beforeEach(async () => {
-        await synchronize()
+        model = { email: `contato-${crypto.randomUUID()}@harvtech.com`, password: 'HarvTech1234!' }
 
         handleRequest = makeHandleRequest()
     })
