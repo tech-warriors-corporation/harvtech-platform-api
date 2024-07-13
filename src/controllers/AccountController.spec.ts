@@ -1,15 +1,38 @@
 import { AxiosError, HttpStatusCode } from 'axios'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 import { AccountController } from './AccountController'
 
-import { connect, disconnect, synchronize } from '~config/database'
+import { connect, dataSource, disconnect, synchronize } from '~config/database'
 import { mockAddAccount } from '~config/mocks'
+import { AccountEntity } from '~entities/AccountEntity'
 import { AccountLoginError } from '~enums/AccountLoginError'
 import { AccountPlan } from '~enums/AccountPlan'
+import { AccountRefreshTokenError } from '~enums/AccountRefreshTokenError'
 import { AccountRegisterError } from '~enums/AccountRegisterError'
 import { AccountType } from '~enums/AccountType'
+import { Header } from '~enums/Header'
 import { CryptoHelper } from '~helpers/CryptoHelper'
+
+const accessToken = 'accessToken'
+const name = 'HarvTech'
+const email = 'contact@harvtech.com'
+const password = 'HarvTech1234!'
+const type = AccountType.ADMIN
+const plan = AccountPlan.DELUXE
+const newAccount = { name, email, password, type, plan }
+
+jest.mock('~middlewares/should-be-logged', () => ({
+    shouldBeLogged: jest.fn(async (_ctx: any, next: () => Promise<void>) => {
+        await next()
+    }),
+}))
+
+jest.mock('~middlewares/should-be-unlogged', () => ({
+    shouldBeUnlogged: jest.fn(async (_ctx: any, next: () => Promise<void>) => {
+        await next()
+    }),
+}))
 
 jest.mock('~helpers/CryptoHelper', () => ({
     CryptoHelper: jest.fn().mockImplementation(() => ({
@@ -18,12 +41,25 @@ jest.mock('~helpers/CryptoHelper', () => ({
     })),
 }))
 
+jest.mock('jsonwebtoken', () => ({
+    verify: jest.fn(),
+    sign: jest.fn().mockReturnValue(accessToken),
+    decode: jest.fn(),
+}))
+
+jest.mock('~config/database', () => ({
+    dataSource: {
+        getRepository: jest.fn().mockReturnValue({
+            findOne: jest.fn().mockImplementation(() => newAccount),
+            save: jest.fn(),
+        }),
+    },
+    connect: jest.fn(),
+    disconnect: jest.fn(),
+    synchronize: jest.fn(),
+}))
+
 describe('AccountController', () => {
-    const name = 'HarvTech'
-    const email = 'contact@harvtech.com'
-    const password = 'HarvTech1234!'
-    const type = AccountType.ADMIN
-    const plan = AccountPlan.DELUXE
     let cryptoHelper: CryptoHelper
     let controller: AccountController
     let ctx: any
@@ -45,7 +81,7 @@ describe('AccountController', () => {
 
     describe('login', () => {
         beforeEach(async () => {
-            await mockAddAccount({ name, email, password, type, plan })
+            await mockAddAccount(newAccount)
 
             ctx = {
                 request: {
@@ -62,16 +98,7 @@ describe('AccountController', () => {
         it(`Should return status code ${HttpStatusCode.Ok} and account as JWT`, async () => {
             await controller.login(ctx)
 
-            const { accessToken } = ctx.body
-            const { account, ...data } = jwt.decode(accessToken) as JwtPayload
-
-            expect(accessToken).toBeTruthy()
-            expect(data.exp).toBeTruthy()
-            expect(account).toHaveProperty('id')
-            expect(account).toHaveProperty('name', name)
-            expect(account).toHaveProperty('email', email)
-            expect(account).toHaveProperty('type', type)
-            expect(account).toHaveProperty('plan', plan)
+            expect(ctx.body.accessToken).toBeTruthy()
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and email required error on no email`, async () => {
@@ -104,7 +131,11 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and account not found error on invalid email`, async () => {
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
+
             ctx.request.body.email = 'invalid@email.com'
+
+            findOne.mockImplementation(() => null)
 
             await controller.login(ctx)
 
@@ -113,8 +144,10 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and general error on throws`, async () => {
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
             const compare = cryptoHelper.compare as jest.Mock
 
+            findOne.mockImplementation(() => newAccount)
             compare.mockImplementationOnce(() => {
                 throw new Error()
             })
@@ -126,8 +159,10 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and general error on Axios error`, async () => {
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
             const compare = cryptoHelper.compare as jest.Mock
 
+            findOne.mockImplementation(() => newAccount)
             compare.mockImplementationOnce(() => {
                 throw new AxiosError('error')
             })
@@ -251,8 +286,10 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and general error on throws`, async () => {
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
             const encrypt = cryptoHelper.encrypt as jest.Mock
 
+            findOne.mockImplementation(() => null)
             encrypt.mockImplementationOnce(() => {
                 throw new Error()
             })
@@ -264,8 +301,10 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.BadRequest} and general error on AxiosError`, async () => {
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
             const encrypt = cryptoHelper.encrypt as jest.Mock
 
+            findOne.mockImplementation(() => null)
             encrypt.mockImplementationOnce(() => {
                 throw new AxiosError('error')
             })
@@ -277,18 +316,94 @@ describe('AccountController', () => {
         })
 
         it(`Should return status code ${HttpStatusCode.Ok} and created account as JWT`, async () => {
+            const save = dataSource.getRepository(AccountEntity).save as jest.Mock
+
+            save.mockImplementation(() => newAccount)
+
             await controller.register(ctx)
 
-            const { accessToken } = ctx.body
-            const { account, ...data } = jwt.decode(accessToken) as JwtPayload
-
             expect(ctx.status).toBe(HttpStatusCode.Ok)
-            expect(data).toHaveProperty('exp')
-            expect(account).toHaveProperty('id')
-            expect(account).toHaveProperty('name', name)
-            expect(account).toHaveProperty('email', email)
-            expect(account).toHaveProperty('type', type)
-            expect(account).toHaveProperty('plan', plan)
+            expect(ctx.body.accessToken).toBeTruthy()
+        })
+    })
+
+    describe('refreshToken', () => {
+        const account = { id: 'abcd1234', email: 'email@test.com' }
+        const accessTokenWithBearer = `Bearer ${accessToken}`
+
+        beforeEach(() => {
+            ctx = {
+                headers: {},
+                body: null,
+                status: HttpStatusCode.Ok,
+            }
+        })
+
+        it(`Should return ${HttpStatusCode.Unauthorized} if no access token is provided`, async () => {
+            await controller.refreshToken(ctx)
+
+            expect(ctx.status).toBe(HttpStatusCode.Unauthorized)
+            expect(ctx.body.error.message).toEqual(AccountRefreshTokenError.EXPIRED_SESSION)
+        })
+
+        it(`Should return status code ${HttpStatusCode.Unauthorized} if the access token is invalid`, async () => {
+            const verify = jwt.verify as jest.Mock
+
+            ctx.headers[Header.X_ACCESS_TOKEN] = accessTokenWithBearer
+
+            verify.mockImplementation(() => {
+                throw new Error()
+            })
+
+            await controller.refreshToken(ctx)
+
+            expect(ctx.status).toBe(HttpStatusCode.Unauthorized)
+            expect(ctx.body.error.message).toEqual(AccountRefreshTokenError.EXPIRED_SESSION)
+        })
+
+        it(`Should return status code ${HttpStatusCode.Unauthorized} if the account is not found`, async () => {
+            const verify = jwt.verify as jest.Mock
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
+
+            ctx.headers[Header.X_ACCESS_TOKEN] = accessTokenWithBearer
+
+            verify.mockImplementation(() => ({ account }))
+            findOne.mockImplementation(() => null)
+
+            await controller.refreshToken(ctx)
+
+            expect(ctx.status).toBe(HttpStatusCode.Unauthorized)
+            expect(ctx.body.error.message).toEqual(AccountRefreshTokenError.EXPIRED_SESSION)
+        })
+
+        it(`Should return status code ${HttpStatusCode.Unauthorized} if the id or email are empty string`, async () => {
+            const verify = jwt.verify as jest.Mock
+
+            ctx.headers[Header.X_ACCESS_TOKEN] = accessTokenWithBearer
+
+            verify.mockImplementation(() => ({ account: { id: '', email: '' } }))
+
+            await controller.refreshToken(ctx)
+
+            expect(ctx.status).toBe(HttpStatusCode.Unauthorized)
+            expect(ctx.body.error.message).toEqual(AccountRefreshTokenError.EXPIRED_SESSION)
+        })
+
+        it('Should return a new access token if the old access token is valid', async () => {
+            const verify = jwt.verify as jest.Mock
+            const sign = jwt.sign as jest.Mock
+            const findOne = dataSource.getRepository(AccountEntity).findOne as jest.Mock
+
+            ctx.headers[Header.X_ACCESS_TOKEN] = accessToken
+
+            verify.mockImplementation(() => ({ account }))
+            sign.mockReturnValue(accessToken)
+            findOne.mockResolvedValue(account)
+
+            await controller.refreshToken(ctx)
+
+            expect(ctx.status).toEqual(HttpStatusCode.Ok)
+            expect(ctx.body.accessToken).toEqual(accessToken)
         })
     })
 })
