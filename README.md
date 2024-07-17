@@ -162,6 +162,7 @@ You should be very specific in file names.
 - [X] Create `SanitizeHelper` for entries.
 - [ ] Maybe use Bcrypt.
 - [ ] Add health check.
+- [ ] Verify user quantities and cultive quantities by account plan.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
