@@ -39,6 +39,7 @@ CRYPTO_ALGORITHM=<set crypto algorithm 🔑>
 CRYPTO_KEY=<set crypto key 🔑>
 CRYPTO_IV=<set crypto IV 🔑>
 PORT=<set port 🔑>
+MODE=<set mode 🔑>
 ```
 
 ### Install packages

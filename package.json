@@ -22,7 +22,7 @@
         "prepare": "husky install",
         "db": "docker-compose up --build",
         "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./src/index.ts",
-        "prod:build": "yarn && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
+        "prod:build": "yarn && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored && yarn migration:run",
         "prod:start": "node ./dist/index.js",
         "lint": "npx eslint src",
         "lint:fix": "yarn lint --fix",
@@ -32,7 +32,9 @@
         "test": "jest --clearCache && jest --passWithNoTests --runInBand",
         "test:watch": "yarn test --watch",
         "test:quiet": "yarn test --noStackTrace",
-        "test:coverage": "yarn test:quiet && ts-node jest-open-coverage"
+        "test:coverage": "yarn test:quiet && ts-node jest-open-coverage",
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+        "migration:run": "yarn typeorm migration:run -d ./src/config/database.ts"
     },
     "devDependencies": {
         "@babel/cli": "^7.24.5",
