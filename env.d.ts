@@ -18,6 +18,7 @@ declare global {
             CRYPTO_KEY: string
             CRYPTO_IV: string
             PORT: string
+            MODE: string
         }
     }
 }

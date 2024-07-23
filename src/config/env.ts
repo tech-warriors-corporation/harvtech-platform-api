@@ -28,4 +28,5 @@ export const env = {
         iv: process.env.CRYPTO_IV as string,
     },
     port: +process.env.PORT! as number,
+    mode: process.env.MODE as string,
 }

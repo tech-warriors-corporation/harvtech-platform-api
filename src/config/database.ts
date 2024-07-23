@@ -4,8 +4,10 @@ import { DataSource } from 'typeorm'
 import 'reflect-metadata'
 
 import { env } from '~config/env'
+import { Mode } from '~enums/Mode'
 
 const directory = join(__dirname, '..')
+const isDev = Mode.DEV === env.mode
 
 export const dataSource = new DataSource({
     type: 'postgres',
@@ -14,9 +16,10 @@ export const dataSource = new DataSource({
     database: env.database.name,
     username: env.database.username,
     password: env.database.password,
-    entities: [`${directory}/entities/**/*.ts`],
-    synchronize: true,
-    logging: false,
+    entities: [`${directory}/entities/**/*.${isDev ? 'ts' : 'js'}`],
+    migrations: [`${directory}/migrations/**/*.${isDev ? 'ts' : 'js'}`],
+    synchronize: isDev,
+    logging: isDev,
 })
 
 export const connect = async () => {
