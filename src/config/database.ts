@@ -20,6 +20,7 @@ export const dataSource = new DataSource({
     migrations: [`${directory}/migrations/**/*.${isDev ? 'ts' : 'js'}`],
     synchronize: isDev,
     logging: isDev,
+    ssl: isDev ? false : { rejectUnauthorized: false },
 })
 
 export const connect = async () => {
