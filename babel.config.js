@@ -22,6 +22,7 @@ module.exports = {
                     '~enums': './src/enums',
                     '~helpers': './src/helpers',
                     '~middlewares': './src/middlewares',
+                    '~migrations': './src/migrations',
                     '~routes': './src/routes',
                     '~services': './src/services',
                     '~types': './src/types',

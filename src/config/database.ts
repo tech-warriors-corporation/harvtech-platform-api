@@ -16,10 +16,10 @@ export const dataSource = new DataSource({
     database: env.database.name,
     username: env.database.username,
     password: env.database.password,
-    entities: [`${directory}/entities/**/*.${isDev ? 'ts' : 'js'}`],
-    migrations: [`${directory}/migrations/**/*.${isDev ? 'ts' : 'js'}`],
-    synchronize: isDev,
-    logging: isDev,
+    entities: [`${directory}/entities/*.ts`],
+    migrations: [`${directory}/migrations/*.ts`],
+    synchronize: false,
+    logging: false,
     ssl: isDev ? false : { rejectUnauthorized: false },
 })
 
