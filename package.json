@@ -22,7 +22,7 @@
         "prepare": "husky install",
         "db": "docker-compose up --build",
         "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./src/index.ts",
-        "prod:build": "yarn && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored && yarn schema:sync && yarn migration:run",
+        "prod:build": "yarn && babel src --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored && yarn migration:run",
         "prod:start": "node ./dist/index.js",
         "lint": "npx eslint src",
         "lint:fix": "yarn lint --fix",

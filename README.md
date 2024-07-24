@@ -90,6 +90,24 @@ yarn test:quiet
 yarn test:coverage
 ```
 
+### Migrations (TypeORM):
+In this project we use [TypeORM](https://typeorm.io) for migrations. Run the commands below.
+
+#### Run
+```
+yarn migration:run
+```
+
+#### Generate
+```
+yarn migration:generate src/migrations/<name>
+```
+
+#### Synchronize
+```
+yarn schema:sync
+```
+
 ## Setup JetBrains (IDE)
 
 ### Configure Lint
