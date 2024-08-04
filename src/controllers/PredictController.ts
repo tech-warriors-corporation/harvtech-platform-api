@@ -47,11 +47,11 @@ export class PredictController {
 
             if (!imageUrl) throw new Error(PredictImageError.IMAGE_UPLOAD_FAILED)
 
-            const text = await this.aiService.getPredictImage(imageUrl, modelType)
+            const result = await this.aiService.getPredictImage(imageUrl, modelType)
 
-            if (!text) throw new Error(PredictImageError.IMAGE_ANALYSIS_FAILED)
+            if (!result.text) throw new Error(PredictImageError.IMAGE_ANALYSIS_FAILED)
 
-            ctx.body = { text }
+            ctx.body = result
         } catch (error) {
             ctx.status = HttpStatusCode.BadRequest
             ctx.body = ErrorHelper.createErrorModel(

@@ -13,9 +13,12 @@ jest.mock('~services/AzureService', () => ({
     })),
 }))
 
+const predictText = 'text'
+const predictProbability = 80
+
 jest.mock('~services/AiService', () => ({
     AiService: jest.fn().mockImplementation(() => ({
-        getPredictImage: jest.fn().mockResolvedValue('text'),
+        getPredictImage: jest.fn().mockResolvedValue({ text: predictText, probability: predictProbability }),
     })),
 }))
 
@@ -67,7 +70,7 @@ describe('PredictController', () => {
         it(`Should return status ${HttpStatusCode.Ok} and text on successful image prediction`, async () => {
             await controller.image(ctx)
 
-            expect(ctx.body.text).toBe('text')
+            expect(ctx.body).toEqual({ text: predictText, probability: predictProbability })
             expect(ctx.status).toBe(HttpStatusCode.Ok)
         })
 
@@ -145,7 +148,7 @@ describe('PredictController', () => {
         it(`Should return status ${HttpStatusCode.BadRequest} and image analysis error message if getPredictImage returns nothing`, async () => {
             const getPredictImage = aiService.getPredictImage as jest.Mock
 
-            getPredictImage.mockReturnValue('')
+            getPredictImage.mockReturnValue({ text: '', probability: 0 })
 
             await controller.image(ctx)
 
@@ -156,7 +159,7 @@ describe('PredictController', () => {
         it(`Should return status ${HttpStatusCode.BadRequest} and general error message if getPredictImage rejects`, async () => {
             const getPredictImage = aiService.getPredictImage as jest.Mock
 
-            getPredictImage.mockRejectedValue('')
+            getPredictImage.mockRejectedValue({ text: '', probability: 0 })
 
             await controller.image(ctx)
 

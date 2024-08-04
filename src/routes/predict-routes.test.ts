@@ -31,6 +31,7 @@ describe('Predict routes', () => {
                 })
 
             expect(body.text).toBeTruthy()
+            expect(body.probability).toBeTruthy()
             expect(statusCode).toBe(HttpStatusCode.Ok)
         }, 20000)
     })
