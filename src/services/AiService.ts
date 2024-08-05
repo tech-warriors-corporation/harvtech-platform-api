@@ -7,11 +7,16 @@ export class AiService {
     private readonly url = env.aiUrl
 
     async getPredictImage(imageUrl: string, type: ModelType) {
-        const { data } = await axios.post(`${this.url}/predict`, {
+        const {
+            data: {
+                generated_text,
+                predicted: { confidence },
+            },
+        } = await axios.post(`${this.url}/predict`, {
             content_url: imageUrl,
             model_type: type,
         })
 
-        return data.generated_text
+        return { text: generated_text || '', probability: confidence || 0 }
     }
 }
