@@ -160,27 +160,27 @@ You should be very specific in file names.
 - [X] Review project.
 - [X] Storage in Danilo's Azure.
 - [X] Add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) and test it.
-- [ ] Add [PostgreSQL](https://www.postgresql.org).
-- [ ] Use [Crypto](https://www.w3schools.com/nodejs/ref_crypto.asp) from NodeJS with algorithm AES-256-CTR.
-- [ ] Add [JWT](https://jwt.io) to authenticate requests.
-- [ ] Use an ORM for PostgreSQL.
+- [X] Add [PostgreSQL](https://www.postgresql.org).
+- [X] Use [Crypto](https://www.w3schools.com/nodejs/ref_crypto.asp) from NodeJS with algorithm AES-256-CTR.
+- [X] Add [JWT](https://jwt.io) to authenticate requests.
+- [X] Use an ORM for PostgreSQL.
 - [ ] Add a logger.
 - [X] Protect passwords with a pattern with numbers, chars and symbols, use minlength too.
 - [X] Add test in CI/CD.
-- [ ] Add environment variables in Cloud.
-- [ ] Protect routes with token.
-- [ ] UUID to avoid sequential ids.
-- [ ] Render or Neon for PostgreSQL.
+- [X] Add environment variables in Cloud.
+- [X] Protect routes with token.
+- [X] UUID to avoid sequential ids.
+- [X] Render or Neon for PostgreSQL.
 - [ ] Remove TODO comments.
 - [ ] Coverage badge in this `README.md`.
-- [ ] Study about [TypeORM](https://typeorm.io).
+- [X] Study about [TypeORM](https://typeorm.io).
 - [ ] Add header with secret key for validate request to AI.
 - [ ] Make the code more agnostic of framework, library and other tools.
-- [ ] Validate our requests with access token.
+- [X] Validate our requests with access token.
 - [ ] Protect routes with account types.
 - [X] Create `SanitizeHelper` for entries.
-- [ ] Maybe use Bcrypt.
-- [ ] Add health check.
+- [X] Maybe use Bcrypt.
+- [X] Add health check.
 - [ ] Verify user quantities and cultive quantities by account plan.
 
 ## Thanks for read
