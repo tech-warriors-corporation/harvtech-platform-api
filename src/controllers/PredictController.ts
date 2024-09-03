@@ -1,10 +1,12 @@
 import { HttpStatusCode, isAxiosError } from 'axios'
 import { Context } from 'koa'
 
+import { UseMiddleware } from '~decorators/UseMiddleware'
 import { ModelType } from '~enums/ModelType'
 import { PredictImageError } from '~enums/PredictImageError'
 import { ErrorHelper } from '~helpers/ErrorHelper'
 import { ImagePrefixHelper } from '~helpers/ImagePrefixHelper'
+import { shouldBeLogged } from '~middlewares/should-be-logged'
 import { AiService } from '~services/AiService'
 import { AzureService } from '~services/AzureService'
 import { Base64File } from '~types/files'
@@ -21,6 +23,7 @@ export class PredictController {
         private readonly aiService: AiService,
     ) {}
 
+    @UseMiddleware(shouldBeLogged)
     async image(ctx: Context) {
         try {
             const { modelType, file } = ctx.request.body as PredictImageBody
