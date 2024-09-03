@@ -7,6 +7,12 @@ import { ImagePrefixHelper } from '~helpers/ImagePrefixHelper'
 import { AiService } from '~services/AiService'
 import { AzureService } from '~services/AzureService'
 
+jest.mock('~middlewares/should-be-logged', () => ({
+    shouldBeLogged: jest.fn(async (_ctx: any, next: () => Promise<void>) => {
+        await next()
+    }),
+}))
+
 jest.mock('~services/AzureService', () => ({
     AzureService: jest.fn().mockImplementation(() => ({
         uploadImage: jest.fn().mockResolvedValue('https://image.com'),
