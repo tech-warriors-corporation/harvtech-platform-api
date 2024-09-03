@@ -182,6 +182,7 @@ You should be very specific in file names.
 - [X] Maybe use Bcrypt.
 - [X] Add health check.
 - [ ] Verify user quantities and cultive quantities by account plan.
+- [X] Run OWASP ZAP test.
 
 ## Thanks for read
 Product made by **[Tech Warriors](https://github.com/tech-warriors-corporation)**.
