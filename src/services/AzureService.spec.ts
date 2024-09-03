@@ -10,6 +10,12 @@ jest.mock('@azure/storage-blob', () => ({
         getBlobClient: jest.fn().mockReturnValue({ url: expectedImageUrl }),
     })),
     StorageSharedKeyCredential: jest.fn().mockImplementation(() => ({})),
+    BlobSASPermissions: {
+        parse: jest.fn().mockReturnValue({}),
+    },
+    generateBlobSASQueryParameters: jest.fn().mockReturnValue({
+        toString: jest.fn().mockReturnValue('token'),
+    }),
 }))
 
 describe('AzureService', () => {
@@ -31,7 +37,7 @@ describe('AzureService', () => {
                 blobHTTPHeaders: { blobContentType },
             })
             expect(instance.getBlobClient).toHaveBeenCalledWith(fileName)
-            expect(imageUrl).toBe(expectedImageUrl)
+            expect(imageUrl).toBe(`${expectedImageUrl}?token`)
         })
     })
 })
